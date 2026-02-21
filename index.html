@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>테이블 주문관리</title>
 
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <style>
 body{
     margin:0;
@@ -26,7 +30,7 @@ table{
 button{
     width:70px;
     height:70px;
-    font-size:18px;
+    font-size:16px;
     border:none;
     border-radius:14px;
     background:#ddd;
@@ -45,12 +49,12 @@ button{
 .item-row{
     display:flex;
     justify-content:space-between;
-    margin:10px 0;
+    margin:8px 0;
 }
 
 .counter button{
-    width:35px;
-    height:35px;
+    width:30px;
+    height:30px;
 }
 
 .count{
@@ -124,6 +128,18 @@ button{
 <td><button onclick="openTable('17')" id="t17">17</button><div id="p17" class="preview"></div></td>
 </tr>
 
+<tr>
+<td><button onclick="openTable('매')" id="t매">매</button><div id="p매" class="preview"></div></td>
+<td><button onclick="openTable('난')" id="t난">난</button><div id="p난" class="preview"></div></td>
+<td><button onclick="openTable('국')" id="t국">국</button><div id="p국" class="preview"></div></td>
+</tr>
+
+<tr>
+<td></td>
+<td><button onclick="openTable('특')" id="t특">특</button><div id="p특" class="preview"></div></td>
+<td></td>
+</tr>
+
 </table>
 </div>
 
@@ -144,8 +160,12 @@ button{
 
 <script>
 
-const items=["맥주","소주","콜라","사이다"];
-const desserts=["후식"];
+const extraItems=["단무지","짜사이"];
+const alcoholItems=[
+"오량액","수정방","금문고량주","죽엽청주",
+"양하대곡주","공부가주","천진고량주","연태고량주",
+"북경고량주","칭다오맥주","맥주","소주","콜라","사이다"
+];
 
 let currentTable=null;
 let tableOrders={};
@@ -163,7 +183,9 @@ function loadItems(){
     const box=document.getElementById("orderItems");
     box.innerHTML="";
 
-    items.forEach(item=>{
+    box.innerHTML+="<h3>📌 추가주문</h3>";
+
+    extraItems.forEach(item=>{
         box.innerHTML+=`
         <div class="item-row">
             <span>${item}</span>
@@ -175,12 +197,25 @@ function loadItems(){
         </div>`;
     });
 
-    box.innerHTML+=`<hr><b>후식 선택</b><br>`;
-    desserts.forEach(d=>{
-        box.innerHTML+=`
+    box.innerHTML+="<hr><h3>🍨 후식요청</h3>";
+    box.innerHTML+=`
         <div style="margin:8px;">
-            <input type="checkbox" id="${d}">
-            <label for="${d}">${d}</label>
+            <input type="checkbox" id="후식요청">
+            <label for="후식요청">후식요청</label>
+        </div>
+    `;
+
+    box.innerHTML+="<hr><h3>🍶 술</h3>";
+
+    alcoholItems.forEach(item=>{
+        box.innerHTML+=`
+        <div class="item-row">
+            <span>${item}</span>
+            <div class="counter">
+                <button onclick="change('${item}',-1)">-</button>
+                <span class="count" id="${item}">0</span>
+                <button onclick="change('${item}',1)">+</button>
+            </div>
         </div>`;
     });
 }
@@ -196,15 +231,13 @@ function change(name,val){
 function saveOrder(){
     let summary=[];
 
-    items.forEach(item=>{
+    [...extraItems,...alcoholItems].forEach(item=>{
         let count=parseInt(document.getElementById(item).innerText);
         if(count>0) summary.push(item+" "+count);
     });
 
-    desserts.forEach(d=>{
-        if(document.getElementById(d).checked)
-            summary.push(d);
-    });
+    if(document.getElementById("후식요청").checked)
+        summary.push("후식요청");
 
     if(summary.length===0) return;
 
