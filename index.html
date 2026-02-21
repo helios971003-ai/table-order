@@ -72,63 +72,56 @@ button{
 
 <!-- ================= 메인 ================= -->
 <div id="mainPage" class="page active">
-
 <h2>🏮 테이블 현황</h2>
 
 <table>
 
 <tr>
-<td><div><button id="t8" onclick="openTable('8')">8</button><div id="p8" class="preview"></div></div></td>
-<td><div><button id="t9" onclick="openTable('9')">9</button><div id="p9" class="preview"></div></div></td>
-<td><div><button id="t10" onclick="openTable('10')">10</button><div id="p10" class="preview"></div></div></td>
+<td><button onclick="openTable('20')" id="t20">20</button><div id="p20" class="preview"></div></td>
+<td><button onclick="openTable('19')" id="t19">19</button><div id="p19" class="preview"></div></td>
+<td><button onclick="openTable('18')" id="t18">18</button><div id="p18" class="preview"></div></td>
 </tr>
 
 <tr>
-<td><div><button id="t7" onclick="openTable('7')">7</button><div id="p7" class="preview"></div></div></td>
-<td></td>
-<td><div><button id="t11" onclick="openTable('11')">11</button><div id="p11" class="preview"></div></div></td>
+<td><button onclick="openTable('8')" id="t8">8</button><div id="p8" class="preview"></div></td>
+<td><button onclick="openTable('9')" id="t9">9</button><div id="p9" class="preview"></div></td>
+<td><button onclick="openTable('10')" id="t10">10</button><div id="p10" class="preview"></div></td>
 </tr>
 
 <tr>
-<td><div><button id="t6" onclick="openTable('6')">6</button><div id="p6" class="preview"></div></div></td>
+<td><button onclick="openTable('7')" id="t7">7</button><div id="p7" class="preview"></div></td>
 <td></td>
-<td><div><button id="t12" onclick="openTable('12')">12</button><div id="p12" class="preview"></div></div></td>
+<td><button onclick="openTable('11')" id="t11">11</button><div id="p11" class="preview"></div></td>
 </tr>
 
 <tr>
-<td><div><button id="t5" onclick="openTable('5')">5</button><div id="p5" class="preview"></div></div></td>
+<td><button onclick="openTable('6')" id="t6">6</button><div id="p6" class="preview"></div></td>
 <td></td>
-<td><div><button id="t13" onclick="openTable('13')">13</button><div id="p13" class="preview"></div></div></td>
+<td><button onclick="openTable('12')" id="t12">12</button><div id="p12" class="preview"></div></td>
 </tr>
 
 <tr>
-<td><div><button id="t3" onclick="openTable('3')">3</button><div id="p3" class="preview"></div></div></td>
+<td><button onclick="openTable('5')" id="t5">5</button><div id="p5" class="preview"></div></td>
 <td></td>
-<td><div><button id="t15" onclick="openTable('15')">15</button><div id="p15" class="preview"></div></div></td>
+<td><button onclick="openTable('13')" id="t13">13</button><div id="p13" class="preview"></div></td>
 </tr>
 
 <tr>
-<td><div><button id="t2" onclick="openTable('2')">2</button><div id="p2" class="preview"></div></div></td>
+<td><button onclick="openTable('3')" id="t3">3</button><div id="p3" class="preview"></div></td>
 <td></td>
-<td><div><button id="t16" onclick="openTable('16')">16</button><div id="p16" class="preview"></div></div></td>
+<td><button onclick="openTable('15')" id="t15">15</button><div id="p15" class="preview"></div></td>
 </tr>
 
 <tr>
-<td><div><button id="t1" onclick="openTable('1')">1</button><div id="p1" class="preview"></div></div></td>
+<td><button onclick="openTable('2')" id="t2">2</button><div id="p2" class="preview"></div></td>
 <td></td>
-<td><div><button id="t17" onclick="openTable('17')">17</button><div id="p17" class="preview"></div></div></td>
+<td><button onclick="openTable('16')" id="t16">16</button><div id="p16" class="preview"></div></td>
 </tr>
 
 <tr>
-<td><div><button id="t매" onclick="openTable('매')">매</button><div id="p매" class="preview"></div></div></td>
-<td><div><button id="t난" onclick="openTable('난')">난</button><div id="p난" class="preview"></div></div></td>
-<td><div><button id="t국" onclick="openTable('국')">국</button><div id="p국" class="preview"></div></div></td>
-</tr>
-
-<tr>
+<td><button onclick="openTable('1')" id="t1">1</button><div id="p1" class="preview"></div></td>
 <td></td>
-<td><div><button id="t특" onclick="openTable('특')">특</button><div id="p특" class="preview"></div></div></td>
-<td></td>
+<td><button onclick="openTable('17')" id="t17">17</button><div id="p17" class="preview"></div></td>
 </tr>
 
 </table>
@@ -136,7 +129,6 @@ button{
 
 <!-- ================= 주문 ================= -->
 <div id="orderPage" class="page">
-
 <h2 id="tableTitle"></h2>
 
 <div id="historyBox" style="background:white;padding:10px;border-radius:10px;margin-bottom:10px;">
@@ -148,12 +140,12 @@ button{
 <button class="main-btn" onclick="saveOrder()">추가주문 저장</button>
 <button class="main-btn" onclick="markDone()">처리 완료</button>
 <button class="main-btn" onclick="goBack()">⬅ 돌아가기</button>
-
 </div>
 
 <script>
 
-const items=["맥주","소주","콜라","사이다","후식"];
+const items=["맥주","소주","콜라","사이다"];
+const desserts=["후식"];
 
 let currentTable=null;
 let tableOrders={};
@@ -182,6 +174,15 @@ function loadItems(){
             </div>
         </div>`;
     });
+
+    box.innerHTML+=`<hr><b>후식 선택</b><br>`;
+    desserts.forEach(d=>{
+        box.innerHTML+=`
+        <div style="margin:8px;">
+            <input type="checkbox" id="${d}">
+            <label for="${d}">${d}</label>
+        </div>`;
+    });
 }
 
 function change(name,val){
@@ -194,9 +195,15 @@ function change(name,val){
 
 function saveOrder(){
     let summary=[];
+
     items.forEach(item=>{
         let count=parseInt(document.getElementById(item).innerText);
         if(count>0) summary.push(item+" "+count);
+    });
+
+    desserts.forEach(d=>{
+        if(document.getElementById(d).checked)
+            summary.push(d);
     });
 
     if(summary.length===0) return;
@@ -227,6 +234,10 @@ function loadHistory(){
 }
 
 function markDone(){
+
+    if(!confirm("손님께 갖다드렸나요?")) return;
+    if(!confirm("POS기 완료했나요?")) return;
+
     tableOrders[currentTable]=[];
     document.getElementById("t"+currentTable).classList.remove("alert");
     document.getElementById("p"+currentTable).innerText="";
